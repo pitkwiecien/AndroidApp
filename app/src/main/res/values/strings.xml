@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">testApp!</string>
+    <string name="counter_label_text">COUNTER</string>
+    <string name="increment_button">INCREMENT</string>
+    <string name="decrement_button">DECREMENT</string>
+    <string name="counter">0</string>
+</resources>
