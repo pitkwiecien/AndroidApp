@@ -8,7 +8,7 @@ import androidx.core.widget.addTextChangedListener
 import com.example.testapp1.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(){
+class ClickerActivity : AppCompatActivity(){
     private lateinit var binding: ActivityMainBinding
     private var counter: Int = 0
     private var step: Int = 1
