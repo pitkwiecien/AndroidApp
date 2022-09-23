@@ -41,6 +41,7 @@
         android:background="@color/green_button"
         android:gravity="center"
         android:text="@string/increment_button" />
+
     <Button
         android:id="@+id/decrement_btn"
         android:textSize="30sp"
