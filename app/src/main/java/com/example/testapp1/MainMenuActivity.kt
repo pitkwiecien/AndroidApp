@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.testapp1.databinding.ActivityMainMenuBinding
 
-class MainMenuActivity : AppCompatActivity() {
+class   MainMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,8 +14,18 @@ class MainMenuActivity : AppCompatActivity() {
         binding = ActivityMainMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.incrementBtn.setOnClickListener{
+        binding.clickerBtn.setOnClickListener{
             val intent = Intent(this, ClickerActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.baseCalculatorBtn.setOnClickListener{
+            val intent = Intent(this, BaseCalculatorActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.quadraticCalculatorBtn.setOnClickListener{
+            val intent = Intent(this, QuadraticCalculatorActivity::class.java)
             startActivity(intent)
         }
     }
