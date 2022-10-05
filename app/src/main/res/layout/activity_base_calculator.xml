@@ -20,6 +20,7 @@
         android:text="@string/calculator" />
 
     <TextView
+        android:id="@+id/calc_display"
         android:textSize="60sp"
         android:textStyle="bold"
         android:textColor="@color/black"
