@@ -11,13 +11,12 @@ import com.example.testapp1.databinding.ActivityClickerBinding
 
 class ClickerActivity : AppCompatActivity(){
     private lateinit var binding: ActivityClickerBinding
-    private var counter: Int = 0
-    private var step: Int = 1
-    private var cancelNext = false
-
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
+        var counter = 0
+        var step = 1
+        var cancelNext = false
         var lastToast = Toast(applicationContext)
         super.onCreate(savedInstanceState)
         binding = ActivityClickerBinding.inflate(layoutInflater)
@@ -38,7 +37,8 @@ class ClickerActivity : AppCompatActivity(){
             counter -= step
             binding.counterValue.text = counter.toString()
             val text = (counter - step).toString() + " - " + step + " = " + counter
-            if(cancelNext) lastToast.cancel()
+            if(cancelNext)
+                lastToast.cancel()
             lastToast = Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT)
             lastToast.show()
             cancelNext = true

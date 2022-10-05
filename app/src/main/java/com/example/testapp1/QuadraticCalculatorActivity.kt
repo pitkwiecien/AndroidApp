@@ -14,6 +14,8 @@ class QuadraticCalculatorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityQuadraticCalculatorBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        var lastToast = Toast(applicationContext)
+        var cancelNext = false
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quadratic_calculator)
         binding = ActivityQuadraticCalculatorBinding.inflate(layoutInflater)
@@ -23,7 +25,6 @@ class QuadraticCalculatorActivity : AppCompatActivity() {
             val a = binding.quadraticA.text?.toString()?.toDoubleOrNull()
             val b = binding.quadraticB.text?.toString()?.toDoubleOrNull()
             val c = binding.quadraticC.text?.toString()?.toDoubleOrNull()
-            println("a: $a\nb: $b\nc: $c")
             if(a != null && b != null && c!= null) {
                 val quadraticResults = quadraticFunc(a, b, c)
                 val text: String = if (quadraticResults.size == 1) {
@@ -31,7 +32,10 @@ class QuadraticCalculatorActivity : AppCompatActivity() {
                 } else {
                     "x1: ${quadraticResults[0]}\nx2: ${quadraticResults[1]}"
                 }
-                Toast.makeText(applicationContext, text, Toast.LENGTH_SHORT).show()
+                if(cancelNext) lastToast.cancel()
+                lastToast = Toast.makeText(applicationContext, text, Toast.LENGTH_LONG)
+                lastToast.show()
+                cancelNext = true
             }
         }
 
