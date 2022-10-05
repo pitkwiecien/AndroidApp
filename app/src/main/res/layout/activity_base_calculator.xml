@@ -118,21 +118,21 @@
                 android:id="@+id/calc_1_btn"
                 android:layout_height="@dimen/calc_size"
                 android:layout_width="@dimen/calc_size"
-                android:text="7"
+                android:text="1"
                 tools:ignore="HardcodedText, ButtonStyle" />
 
             <Button
                 android:id="@+id/calc_2_btn"
                 android:layout_height="@dimen/calc_size"
                 android:layout_width="@dimen/calc_size"
-                android:text="8"
+                android:text="2"
                 tools:ignore="HardcodedText, ButtonStyle" />
 
             <Button
                 android:id="@+id/calc_3_btn"
                 android:layout_height="@dimen/calc_size"
                 android:layout_width="@dimen/calc_size"
-                android:text="9"
+                android:text="3"
                 tools:ignore="HardcodedText, ButtonStyle" />
 
             <Button
