@@ -14,4 +14,6 @@
     <string name="quadratic_a_placeholder">a</string>
     <string name="quadratic_b_placeholder">b</string>
     <string name="quadratic_c_placeholder">c</string>
+    <string name="calculator">Calculator</string>
+    <string name="hello_btn">Hello</string>
 </resources>
