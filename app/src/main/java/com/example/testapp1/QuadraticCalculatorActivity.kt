@@ -63,8 +63,11 @@ class QuadraticCalculatorActivity : AppCompatActivity() {
         }
     }
 
-    private fun round(number: Double, decimalPlaces: Int): Double {
-        val margin = 10.0.pow(decimalPlaces)
-        return (number * margin).roundToInt() / margin
+
+    companion object {
+        fun round(number: Double, decimalPlaces: Int): Double {
+            val margin = 10.0.pow(decimalPlaces)
+            return (number * margin).roundToInt() / margin
+        }
     }
 }
