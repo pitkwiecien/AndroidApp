@@ -1,32 +1,54 @@
 package com.example.testapp1
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.testapp1.databinding.ActivityBaseCalculatorBinding
+
 
 class BaseCalculatorActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBaseCalculatorBinding
     private val maxCharacters = 9
+    private val scNotationCharacters = 4
+    private val ignoredDisplays = setOf("0", "HELLO!")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         var firstNumber: Double? = null
         var secondNumber: Double?
         var sign: Operation? = null
         var calculated = false
+        var doNotCalc = false
+
+        fun resetCalculator(){
+            firstNumber = null
+            secondNumber = null
+            sign = null
+            calculated = false
+            doNotCalc = false
+            setDisplayText("0")
+        }
 
         fun handleCharacterInput(character: String){
-            val text = if(getDisplayText() == "0" && character != ".") character else getDisplayText() + character
+            if(doNotCalc) return
+            val text =
+                if (ignoredDisplays.contains(getDisplayText()))
+                    if (character == ".")
+                        "0."
+                    else
+                        character
+                else
+                    getDisplayText() + character
             if(text.length <= maxCharacters && !calculated)
-                binding.calcDisplay.text = text
+                setDisplayText(text)
         }
 
         fun handleOperationSign(character: String){
+            if(doNotCalc) return
             val wasNull = sign == null
             sign = Operation.toOperation(character)
             if(wasNull || calculated) {
                 firstNumber = getDisplayText().toDouble()
-                binding.calcDisplay.text = "0"
+                setDisplayText("0")
                 if(calculated) calculated = false
             }
         }
@@ -37,15 +59,12 @@ class BaseCalculatorActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.calcHelloBtn.setOnClickListener{
-            //I don't know what to put here
+            setDisplayText("HELLO!")
+            doNotCalc = true
         }
 
         binding.calcCBtn.setOnClickListener {
-            firstNumber = null
-            secondNumber = null
-            sign = null
-            calculated = false
-            binding.calcDisplay.text = "0"
+            resetCalculator()
         }
 
         binding.calcAdditionBtn.setOnClickListener {
@@ -65,6 +84,7 @@ class BaseCalculatorActivity : AppCompatActivity() {
         }
 
         binding.calcEqualsBtn.setOnClickListener {
+            if(doNotCalc) return@setOnClickListener
             val res: Double?
             if(firstNumber==null){
                 res = getDisplayText().toDouble()
@@ -79,13 +99,33 @@ class BaseCalculatorActivity : AppCompatActivity() {
                 }
             }
 
-            binding.calcDisplay.text = if (res == null){
-                "ERROR"
-            } else if (res.toDouble().compareTo(res.toInt()) == 0){
-                res.toInt().toString()
-            } else {
-                res.toString()
+            var resText =
+                if (res == null)
+                    "ERROR"
+                else if (res.toDouble().compareTo(res.toLong()) == 0)
+                    res.toLong().toString()
+                else
+                    res.toString()
+
+            if(resText.length > maxCharacters) {
+                var ePassed = false
+                var mainNumberText = ""
+                var decPlacesText = ""
+
+                for(elem in resText.toDouble().toString()){
+                    if(elem == 'E')
+                        ePassed = true
+                    else{
+                        if(!ePassed)
+                            mainNumberText += elem
+                        else
+                            decPlacesText += elem
+                    }
+                }
+                val mainNumberDbl = QuadraticCalculatorActivity.round(mainNumberText.toDouble(), maxCharacters - scNotationCharacters - 2)
+                resText = "${mainNumberDbl}E+${decPlacesText}"
             }
+            setDisplayText(resText)
             calculated = true
         }
 
@@ -142,8 +182,12 @@ class BaseCalculatorActivity : AppCompatActivity() {
 
 
 
-    fun getDisplayText(): String{
+    private fun getDisplayText(): String{
         return binding.calcDisplay.text.toString()
+    }
+
+    private fun setDisplayText(str: String){
+        binding.calcDisplay.text = str
     }
 
     enum class Operation{
